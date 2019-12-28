@@ -1,0 +1,58 @@
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">App for study</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        
+        {{#if isHome}}
+        <li class="active">
+          <a href="/">Home page</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/">Home page</a>
+        </li>
+        {{/if}}
+        
+         {{#if isItems}}
+        <li class="active">
+          <a href="/items">All Items</a>
+        </li>
+        {{else}}
+       <li>
+          <a href="/items">All Items</a>
+        </li>
+        {{/if}}
+
+        {{#if isAdd}}
+        <li class="active">
+          <a href="/add">Add item</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/add">Add item</a>
+        </li>
+        {{/if}}
+
+         {{#if isAbout}}
+        <li class="active">
+          <a href="/about">About</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/about">About</a>
+        </li>
+        {{/if}}
+
+          {{#if isCard}}
+        <li class="active">
+          <a href="/card">Card</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/card">Card</a>
+        </li>
+        {{/if}}
+
+      </ul>
+    </div>
+  </nav>

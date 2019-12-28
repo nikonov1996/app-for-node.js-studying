@@ -1,0 +1,37 @@
+.nav-wrapper {
+  padding: 0 2rem;
+}
+
+.card-action{
+  font-size: 2rem;
+}
+
+.price {
+  font-size: 2rem;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item h1 {
+  margin-bottom: 2rem;
+}
+
+.item img {
+  max-width: 600px;
+  height: auto;
+}
+
+.item .price.big {
+  font-size: 2.5rem;
+}
+
+.card-action.action{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
