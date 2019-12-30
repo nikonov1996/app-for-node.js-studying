@@ -3,7 +3,7 @@ const Item = require("../models/item");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const items = await Item.getAll();
+  const items = await Item.find();
   res.render("items", {
     title: "Items",
     isItems: true,
@@ -11,30 +11,30 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/:id/edit", async (req, res) => {
+  if (!req.query.allow) {
+    return res.redirect("/");
+  }
 
+  const item = await Item.findById(req.params.id);
 
-router.get('/:id/edit', async (req, res)=>{
-  if(!req.query.allow){
-    return res.redirect('/')}
-  
-    const item = await Item.getById(req.params.id);
+  res.render("item-edit", {
+    title: `Edit ${item.title}`,
+    item
+  });
+});
 
-    res.render('item-edit',{
-      title: `Edit ${item.title}`,
-      item
-    })
+router.post("/edit", async (req, res) => {
+  const { id } = req.body;
+  delete req.body.id;
+  await Item.findByIdAndUpdate(id, req.body);
+  res.redirect("/items");
+});
 
-})
+router.get("/:id", async (req, res) => {
+  const item = await Item.findById(req.params.id);
 
-router.post('/edit', async (req, res)=>{
-  await Item.update(req.body)
-  res.redirect('/items')
-})
-
-router.get('/:id', async (req, res) => {
-  const item = await Item.getById(req.params.id);
-
-  res.render('item' , {
+  res.render("item", {
     layout: "empty",
     title: `Item: ${item.title}`,
     item
@@ -42,4 +42,3 @@ router.get('/:id', async (req, res) => {
 });
 
 module.exports = router;
-
