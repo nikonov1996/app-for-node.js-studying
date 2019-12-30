@@ -35,7 +35,11 @@ async function start() {
   try {
     const password = "Gj1mGr9iLgvlYDk4";
     const dbUrl = `mongodb+srv://qa:${password}@cluster0-yemnw.mongodb.net/data`;
-    await mongoose.connect(dbUrl, { useNewUrlParser: true });
+    await mongoose.connect(dbUrl, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true
+    });
     app.listen(PORT, () => {
       console.log(`Server is running on port: ${PORT}`);
     });

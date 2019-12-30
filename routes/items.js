@@ -24,6 +24,15 @@ router.get("/:id/edit", async (req, res) => {
   });
 });
 
+router.post("/remove", async (req, res) => {
+  try {
+    await Item.deleteOne({ _id: req.body.id });
+    res.redirect("/items");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.post("/edit", async (req, res) => {
   const { id } = req.body;
   delete req.body.id;
