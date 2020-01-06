@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const item = new Schema({
+const itemSchema = new Schema({
   title: {
     type: String,
     required: true
@@ -9,7 +9,19 @@ const item = new Schema({
     type: Number,
     required: true
   },
-  img: String
+  img: String,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
-module.exports = model("Item", item);
+itemSchema.method("toClient", function() {
+  const item = this.toObject();
+
+  item.id = item._id;
+  delete item._id;
+  return item;
+});
+
+module.exports = model("Item", itemSchema);

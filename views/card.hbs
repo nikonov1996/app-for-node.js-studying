@@ -31,6 +31,9 @@
   <strong>Price:</strong> 
   <span class="price">{{price}}</span>
 </p>
+<form action="/order" method="POST">
+  <button type="submit" class="btn">Make order</button>
+</form>
 
 {{else}}
 <h5>Card is empty</h5>

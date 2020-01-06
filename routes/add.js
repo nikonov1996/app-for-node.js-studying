@@ -14,7 +14,8 @@ router.post("/", async (req, res) => {
   const item = new Item({
     title: req.body.title,
     price: req.body.price,
-    img: req.body.img
+    img: req.body.img,
+    userId: req.user
   });
 
   try {
@@ -23,7 +24,6 @@ router.post("/", async (req, res) => {
   } catch (e) {
     console.error(e);
   }
-
 });
 
 module.exports = router;
