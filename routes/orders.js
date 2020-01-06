@@ -4,22 +4,25 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const orders = await Order.find({ "user.userId": req.user._id }).populate('user.userId');
-
+    const orders = await Order.find({ "user.userId": req.user._id }).populate(
+      "user.userId"
+    );
 
     res.render("orders", {
       isOrder: true,
       title: "Orders",
-      order: order.map(o=>{
-        return{
+      orders: orders.map(o => {
+        return {
           ...o._doc,
-          price: o.items.reduce((total,c)=>{
-            return total += c.count * c.items.price
-          },0)
-        }
+          price: o.items.reduce((total, c) => {
+            return (total += c.count * c.item.price);
+          }, 0)
+        };
       })
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 router.post("/", async (req, res) => {
