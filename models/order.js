@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 const orderSchema = new Schema({
-  courses: [
+  items: [
     {
-      course: {
+      item: {
         type: Object,
         required: true
       },

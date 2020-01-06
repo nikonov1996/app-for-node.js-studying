@@ -47,18 +47,23 @@ user.methods.addToCart = function(item) {
   return this.save();
 };
 
-user.methods.removeFromCart = function(id){
-  let items = [...this.cart.items]
-  const index = items.findIndex(c=> c.itemId.toString() === id.toString())
+user.methods.removeFromCart = function(id) {
+  let items = [...this.cart.items];
+  const index = items.findIndex(c => c.itemId.toString() === id.toString());
 
   if (items[index].count === 1) {
-    items = items.filter(c=>c.itemId.toString() !== id.toString())
+    items = items.filter(c => c.itemId.toString() !== id.toString());
   } else {
-    items[index].count--
+    items[index].count--;
   }
 
-  this.cart = {items}
-  return this.save()
-}
+  this.cart = { items };
+  return this.save();
+};
+
+user.methods.clearCart = function() {
+  this.cart = { item: [] };
+  return this.save();
+};
 
 module.exports = model("User", user);
