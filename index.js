@@ -8,6 +8,7 @@ const aboutRoutes = require("./routes/about");
 const itemsRoutes = require("./routes/items");
 const addRoutes = require("./routes/add");
 const cardRoutes = require("./routes/card");
+const ordersRoutes = require('./routes/orders')
 const User = require("./models/user");
 
 const app = express();
@@ -40,6 +41,7 @@ app.use("/about", aboutRoutes);
 app.use("/add", addRoutes);
 app.use("/items", itemsRoutes);
 app.use("/card", cardRoutes);
+app.use('/orders', ordersRoutes)
 
 const PORT = process.env.PORT || 3000;
 
