@@ -8,7 +8,8 @@ const aboutRoutes = require("./routes/about");
 const itemsRoutes = require("./routes/items");
 const addRoutes = require("./routes/add");
 const cardRoutes = require("./routes/card");
-const ordersRoutes = require('./routes/orders')
+const ordersRoutes = require("./routes/orders");
+const authRoutes = require("./routes/auth");
 const User = require("./models/user");
 
 const app = express();
@@ -22,16 +23,15 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(async(req,res,next)=>{
+app.use(async (req, res, next) => {
   try {
-    const user = await User.findById('5e09b36b106a94048cdf5bd4')
+    const user = await User.findById("5e09b36b106a94048cdf5bd4");
     req.user = user;
     next();
   } catch (error) {
     console.error(error);
   }
-  
-})
+});
 
 //Get files from directories:
 app.use(express.static(path.join(__dirname, "public")));
@@ -41,13 +41,14 @@ app.use("/about", aboutRoutes);
 app.use("/add", addRoutes);
 app.use("/items", itemsRoutes);
 app.use("/card", cardRoutes);
-app.use('/orders', ordersRoutes)
+app.use("/orders", ordersRoutes);
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    const password = "Gj1mGr9iLgvlYDk4";
+    const password = "VsBvx6Bc3CiXeiIU";
     const dbUrl = `mongodb+srv://qa:${password}@cluster0-yemnw.mongodb.net/data`;
     await mongoose.connect(dbUrl, {
       useNewUrlParser: true,

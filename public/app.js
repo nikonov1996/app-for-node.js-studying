@@ -1,3 +1,5 @@
+M.Tabs.init(document.querySelectorAll("ul.tabs"));
+
 const toCurrency = price => {
   return new Intl.NumberFormat("ru-RU", {
     currency: "rub",
@@ -6,13 +8,13 @@ const toCurrency = price => {
 };
 
 const toDate = date => {
-  return new Intl.DateTimeFormat('ru-RU', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
   }).format(new Date(date));
 };
 
@@ -57,3 +59,5 @@ if (card) {
     }
   });
 }
+
+
