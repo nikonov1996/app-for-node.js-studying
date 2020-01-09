@@ -15,12 +15,14 @@
         </div>
         <div class="card-action action">
           <a href="/items/{{id}}" target="_blank">Open</a>
+         {{#if @root.isAuth}}
           <a href="/items/{{id}}/edit?allow=true">Edit</a>
           <form action="/card/add" method="POST">
             <input type="hidden" name="id" value="{{id}}">
             <button type="submit" class="btn btn-primary">Add to card</button>
           
           </form>
+          {{/if}}
         </div>
       </div>
     </div>

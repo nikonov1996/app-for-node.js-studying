@@ -4,6 +4,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const session = require("express-session");
+const MongoStore = require('connect-mongodb-session')(session)
 const homeRoutes = require("./routes/home");
 const aboutRoutes = require("./routes/about");
 const itemsRoutes = require("./routes/items");
@@ -14,11 +15,18 @@ const authRoutes = require("./routes/auth");
 const User = require("./models/user");
 const varMiddleware = require("./middleware/variables");
 
+const MONGODB_qa_PASSWORD = "VsBvx6Bc3CiXeiIU";
+const MONGODB_URI = `mongodb+srv://qa:${MONGODB_qa_PASSWORD}@cluster0-yemnw.mongodb.net/data`;
+
 const app = express();
 const hbs = handlebars.create({
   defaultLayout: "main",
   extname: "hbs"
 });
+const store = new MongoStore({
+  collection: 'sessions',
+  uri: MONGODB_URI
+})
 
 //Configurations:
 app.engine("hbs", hbs.engine);
@@ -32,7 +40,8 @@ app.use(
   session({
     secret: "some secret value",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store
   })
 );
 app.use(varMiddleware);
@@ -49,9 +58,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    const password = "VsBvx6Bc3CiXeiIU";
-    const dbUrl = `mongodb+srv://qa:${password}@cluster0-yemnw.mongodb.net/data`;
-    await mongoose.connect(dbUrl, {
+    await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true
