@@ -23,16 +23,6 @@
         </li>
         {{/if}}
 
-        {{#if isAdd}}
-        <li class="active">
-          <a href="/add">Add item</a>
-        </li>
-        {{else}}
-        <li>
-          <a href="/add">Add item</a>
-        </li>
-        {{/if}}
-
          {{#if isAbout}}
         <li class="active">
           <a href="/about">About</a>
@@ -40,6 +30,17 @@
         {{else}}
         <li>
           <a href="/about">About</a>
+        </li>
+        {{/if}}
+
+{{#if isAuth}}
+{{#if isAdd}}
+        <li class="active">
+          <a href="/add">Add item</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/add">Add item</a>
         </li>
         {{/if}}
 
@@ -61,9 +62,11 @@
         <li>
           <a href="/orders">Order</a>
         </li>
-        {{/if}}
 
-         {{#if isLogin}}
+        <li><a href="/auth/logout">Log out</a></li>
+        {{/if}}
+{{else}}
+ {{#if isLogin}}
         <li class="active">
           <a href="/auth/login#login">Log in</a>
         </li>
@@ -72,7 +75,9 @@
           <a href="/auth/login#login">Log in</a>
         </li>
         {{/if}}
+{{/if}}
 
+        
       </ul>
     </div>
   </nav>

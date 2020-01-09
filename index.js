@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
+const session = require("express-session");
 const homeRoutes = require("./routes/home");
 const aboutRoutes = require("./routes/about");
 const itemsRoutes = require("./routes/items");
@@ -11,6 +12,7 @@ const cardRoutes = require("./routes/card");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 const User = require("./models/user");
+const varMiddleware = require("./middleware/variables");
 
 const app = express();
 const hbs = handlebars.create({
@@ -23,19 +25,18 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(async (req, res, next) => {
-  try {
-    const user = await User.findById("5e09b36b106a94048cdf5bd4");
-    req.user = user;
-    next();
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 //Get files from directories:
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "some secret value",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(varMiddleware);
+
 app.use("/", homeRoutes);
 app.use("/about", aboutRoutes);
 app.use("/add", addRoutes);
@@ -56,7 +57,7 @@ async function start() {
       useUnifiedTopology: true
     });
 
-    const candidate = await User.findOne();
+  /*  const candidate = await User.findOne();
     if (!candidate) {
       const user = new User({
         email: "nva.1996@yandex.ru",
@@ -64,8 +65,8 @@ async function start() {
         cart: { items: [] }
       });
       await user.save();
-    }
-
+    } 
+*/
     app.listen(PORT, () => {
       console.log(`Server is running on port: ${PORT}`);
     });
