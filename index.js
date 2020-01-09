@@ -4,7 +4,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const session = require("express-session");
-const MongoStore = require('connect-mongodb-session')(session)
+const MongoStore = require("connect-mongodb-session")(session);
 const homeRoutes = require("./routes/home");
 const aboutRoutes = require("./routes/about");
 const itemsRoutes = require("./routes/items");
@@ -14,6 +14,7 @@ const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 const User = require("./models/user");
 const varMiddleware = require("./middleware/variables");
+const userMiddleware = require("./middleware/user");
 
 const MONGODB_qa_PASSWORD = "VsBvx6Bc3CiXeiIU";
 const MONGODB_URI = `mongodb+srv://qa:${MONGODB_qa_PASSWORD}@cluster0-yemnw.mongodb.net/data`;
@@ -24,9 +25,9 @@ const hbs = handlebars.create({
   extname: "hbs"
 });
 const store = new MongoStore({
-  collection: 'sessions',
+  collection: "sessions",
   uri: MONGODB_URI
-})
+});
 
 //Configurations:
 app.engine("hbs", hbs.engine);
@@ -41,10 +42,11 @@ app.use(
     secret: "some secret value",
     resave: false,
     saveUninitialized: false,
-    store
+    store : store
   })
 );
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 app.use("/", homeRoutes);
 app.use("/about", aboutRoutes);
@@ -64,16 +66,6 @@ async function start() {
       useUnifiedTopology: true
     });
 
-  /*  const candidate = await User.findOne();
-    if (!candidate) {
-      const user = new User({
-        email: "nva.1996@yandex.ru",
-        name: "Vladislav Nikonov",
-        cart: { items: [] }
-      });
-      await user.save();
-    } 
-*/
     app.listen(PORT, () => {
       console.log(`Server is running on port: ${PORT}`);
     });
