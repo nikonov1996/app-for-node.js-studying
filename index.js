@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const csfr = require('csurf')
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const session = require("express-session");
@@ -37,14 +38,14 @@ app.set("views", "views");
 //Get files from directories:
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
+app.use(session({
     secret: "some secret value",
     resave: false,
     saveUninitialized: false,
     store : store
   })
 );
+app.use(csfr())
 app.use(varMiddleware);
 app.use(userMiddleware);
 
