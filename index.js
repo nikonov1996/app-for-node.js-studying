@@ -15,9 +15,7 @@ const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
-
-const MONGODB_qa_PASSWORD = "VsBvx6Bc3CiXeiIU";
-const MONGODB_URI = `mongodb+srv://qa:${MONGODB_qa_PASSWORD}@cluster0-yemnw.mongodb.net/data`;
+const key = require('./keys')
 
 const app = express();
 const hbs = handlebars.create({
@@ -26,7 +24,7 @@ const hbs = handlebars.create({
 });
 const store = new MongoStore({
   collection: "sessions",
-  uri: MONGODB_URI
+  uri: key.MONGODB_URI
 });
 
 //Configurations:
@@ -38,7 +36,7 @@ app.set("views", "views");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: "some secret value",
+    secret: key.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store : store
@@ -61,7 +59,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(key.MONGODB_URI, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true
