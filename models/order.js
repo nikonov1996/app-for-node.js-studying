@@ -26,4 +26,12 @@ const orderSchema = new Schema({
   }
 });
 
+orderSchema.method("toClient", function() {
+  const order = this.toObject();
+
+  order.id = order._id;
+  delete order._id;
+  return order;
+});
+
 module.exports = model("Order", orderSchema);

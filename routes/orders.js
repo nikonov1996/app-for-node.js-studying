@@ -51,4 +51,13 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+router.post("/remove", auth, async (req, res) => {
+  try {
+    await Order.deleteOne({ _id: req.body.id });
+    res.redirect("/orders");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;

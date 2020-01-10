@@ -20,6 +20,11 @@
           </ol>
           <hr>
           <p>Price: <span class="price">{{price}}</span></p>
+          <form action="/orders/remove" method="POST">
+                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button class="btn red">Delete order</button>
+          </form>
         </div>
       </div>
     </div>
