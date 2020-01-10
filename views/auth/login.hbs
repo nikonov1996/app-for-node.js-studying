@@ -8,6 +8,11 @@
       </div>
       <div id="login" class="col s6 offset-s3">
         <h1>Log in system</h1>
+
+            {{#if loginError}}
+              <p class="alert">{{loginError}}</p>
+            {{/if}}
+
         <form action="/auth/login" method="POST">
           <div class="input-field">
             <input id="email" name="email" type="email" class="validate" required>
@@ -28,6 +33,9 @@
       </div>
       <div id="regist" class="col s6 offset-s3">
         <h1>Create acount</h1>
+        {{#if registerError}}
+              <p class="alert">{{registerError}}</p>
+            {{/if}}
         <form action="/auth/regist" method="POST">
           
            <div class="input-field">
